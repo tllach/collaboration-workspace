@@ -5,6 +5,15 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --role-accent: #7f77dd;
+}
+
+:root[data-role="brand"] {
+  --role-accent: #7f77dd;
+}
+
+:root[data-role="designer"] {
+  --role-accent: #1d9e75;
 }
 
 @media (prefers-color-scheme: dark) {
