@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "@/lib/auth/context";
 
 import { REQUEST_STATUS_LABELS, type RequestStatus } from "@/types";
-import { type BrandRequestRow, type DesignerRequestRow } from "@/types/workspace.types";
+import { type DesignerRequestRow } from "@/types/workspace.types";
 
 import { useMyBrandRequestsQuery, useDesignerRequestsQuery } from "@/lib/hooks/useSidebar";
 
@@ -52,11 +52,45 @@ function brandName(brand: DesignerRequestRow["brand"]): string {
   return brand?.full_name?.trim() || "Brand";
 }
 
+function SidebarCollapseIcon({ direction }: { direction: "collapse" | "expand" }) {
+  /* Panel-style chevrons: expand = show list, collapse = hide list */
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="text-[var(--foreground)]"
+      aria-hidden
+    >
+      {direction === "expand" ? (
+        <path d="M9 18V6l6 6-6 6z" />
+      ) : (
+        <path d="M15 18V6l-6 6 6 6z" />
+      )}
+    </svg>
+  );
+}
+
 export function WorkspaceSidebar({ userId }: WorkspaceSidebarProps) {
   const params = useParams<{ userId?: string; requestId?: string }>();
   const activeRequestId = params?.requestId ?? null;
+  const projectOpen = Boolean(activeRequestId);
   const { profile, isLoading: authLoading } = useAuth();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  /** When a project route is open, sidebar starts collapsed; user can expand to see the full list. */
+  const [listExpanded, setListExpanded] = useState(false);
+
+  useEffect(() => {
+    if (!projectOpen) setListExpanded(false);
+  }, [projectOpen]);
+
+  const collapsed = projectOpen && !listExpanded;
 
   const { data: myRequests, isLoading: myRequestsLoading, error: myRequestsError } = useMyBrandRequestsQuery(userId, authLoading, profile);
   const { data: designerRequests, isLoading: designerRequestsLoading, error: designerRequestsError } = useDesignerRequestsQuery(userId, authLoading, profile);
@@ -87,14 +121,46 @@ export function WorkspaceSidebar({ userId }: WorkspaceSidebarProps) {
 
   return (
     <aside
-      className="relative flex h-full min-h-0 w-[260px] shrink-0 flex-col border-r border-[var(--color-border-tertiary)] bg-[var(--surface)]"
+      className={[
+        "relative flex h-full min-h-0 shrink-0 flex-col border-r border-[var(--color-border-tertiary)] bg-[var(--surface)] transition-[width] duration-300 ease-out",
+        collapsed ? "w-[52px] overflow-hidden" : "w-[240px]",
+      ].join(" ")}
       style={{ borderRightWidth: "0.5px" }}
     >
+      {collapsed ? (
+        <div className="flex h-full min-h-0 flex-col items-center py-3">
+          <button
+            type="button"
+            onClick={() => setListExpanded(true)}
+            className="flex size-10 items-center justify-center rounded-lg border border-[var(--border-soft)] bg-[var(--surface-2)] text-[var(--foreground)] transition-colors hover:border-[var(--border-accent)] hover:bg-[var(--surface)]"
+            title="Show projects"
+            aria-label="Show projects"
+          >
+            <SidebarCollapseIcon direction="expand" />
+          </button>
+        </div>
+      ) : (
+        <>
       <header className="shrink-0 border-b border-[var(--border-soft)] px-4 py-4">
-        <h2 className="text-sm font-semibold text-[var(--foreground)]">
-          Projects
-        </h2>
-        <p className="mt-1 text-xs text-[var(--muted)]">{headerSubtitle}</p>
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0 flex-1">
+            <h2 className="text-sm font-semibold text-[var(--foreground)]">
+              Projects
+            </h2>
+            <p className="mt-1 text-xs text-[var(--muted)]">{headerSubtitle}</p>
+          </div>
+          {projectOpen ? (
+            <button
+              type="button"
+              onClick={() => setListExpanded(false)}
+              className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg border border-transparent text-[var(--muted)] hover:border-[var(--border-soft)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)]"
+              title="Collapse sidebar"
+              aria-label="Collapse sidebar"
+            >
+              <SidebarCollapseIcon direction="collapse" />
+            </button>
+          ) : null}
+        </div>
       </header>
 
       <div className="min-h-0 flex-1 overflow-y-auto">
@@ -287,6 +353,9 @@ export function WorkspaceSidebar({ userId }: WorkspaceSidebarProps) {
           </button>
         </footer>
       ) : null}
+
+        </>
+      )}
 
       {toastMessage ? (
         <div

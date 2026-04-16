@@ -24,6 +24,9 @@
   --status-completed-text: #6ee7b7;
   --status-completed-ring: rgba(52, 211, 153, 0.3);
   --skeleton-pulse: rgba(232, 247, 250, 0.14);
+  --scrollbar-track: rgba(255, 255, 255, 0.06);
+  --scrollbar-thumb: rgba(6, 182, 212, 0.45);
+  --scrollbar-thumb-hover: rgba(6, 182, 212, 0.62);
 }
 
 /* Brand: warm orange — reads clearly against white UI */
@@ -52,6 +55,9 @@
   --status-completed-text: #047857;
   --status-completed-ring: rgba(16, 185, 129, 0.32);
   --skeleton-pulse: rgba(15, 23, 42, 0.12);
+  --scrollbar-track: rgba(234, 88, 12, 0.08);
+  --scrollbar-thumb: rgba(234, 88, 12, 0.42);
+  --scrollbar-thumb-hover: rgba(234, 88, 12, 0.62);
 }
 
 /* Designer: cool cyan — distinct from brand’s warm spectrum */
@@ -78,6 +84,9 @@
   --status-completed-text: #6ee7b7;
   --status-completed-ring: rgba(52, 211, 153, 0.3);
   --skeleton-pulse: rgba(232, 247, 250, 0.14);
+  --scrollbar-track: rgba(6, 182, 212, 0.12);
+  --scrollbar-thumb: rgba(103, 232, 249, 0.4);
+  --scrollbar-thumb-hover: rgba(103, 232, 249, 0.62);
 }
 
 body {
@@ -106,6 +115,29 @@ body {
 
 .workspace-panel-last {
   border-right: none;
+}
+
+.themed-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+.themed-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.themed-scrollbar::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 9999px;
+}
+
+.themed-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 9999px;
+}
+
+.themed-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
 }
 
 @layer utilities {

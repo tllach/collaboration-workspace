@@ -21,13 +21,9 @@ export default function WorkspaceUserPage({
   }
 
   return (
-    <div className="grid"
-    style={{
-      gridTemplateColumns: "280px 1fr 320px",
-      height: "calc(100vh - 48px)",
-    }}>
-      <aside><WorkspaceSidebar userId={userId} /></aside>
-      <main className="pt-10 text-lg text-[var(--muted)]">
+    <div className="flex h-[calc(100vh-48px)] min-h-0">
+      <WorkspaceSidebar userId={userId} />
+      <main className="flex min-h-0 min-w-0 flex-1 items-start justify-center pt-10 text-lg text-[var(--muted)]">
         <p>Select a project to see more details...</p>
       </main>
     </div>

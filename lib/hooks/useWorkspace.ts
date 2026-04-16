@@ -6,13 +6,13 @@ import { createClient } from "@/lib/supabase/client";
 import type { DesignRequestWithRelations, WorkspaceData } from "@/types";
 
 export function useWorkspace(requestId: string | null | undefined) {
-  return useQuery<WorkspaceData>({
+  return useQuery<WorkspaceData | null>({
     queryKey: ["workspace", requestId],
     enabled: Boolean(requestId),
     staleTime: 30_000,
-    queryFn: async () => {
+    queryFn: async (): Promise<WorkspaceData | null> => {
       if (!requestId) {
-        throw new Error("Missing requestId");
+        return null;
       }
 
       const supabase = createClient();
@@ -31,7 +31,7 @@ export function useWorkspace(requestId: string | null | undefined) {
       if (error) throw error;
 
       if (!data) {
-        throw new Error("Design request not found or not accessible");
+        return null;
       }
 
       return {
