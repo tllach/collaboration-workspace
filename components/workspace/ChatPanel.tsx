@@ -91,7 +91,7 @@ export function ChatPanel({ requestId, request }: ChatPanelProps) {
       ) : (
         <div
           ref={scrollRef}
-          className="mt-3 flex-1 space-y-2 overflow-y-auto rounded-lg border border-[var(--color-border-tertiary)] bg-[var(--surface-2)] p-3"
+          className="themed-scrollbar mt-3 flex-1 space-y-2 overflow-y-auto rounded-lg border border-[var(--color-border-tertiary)] bg-[var(--surface-2)] p-3"
         >
           {messages.length === 0 ? (
             <p className="text-sm text-[var(--muted)]">No messages yet.</p>

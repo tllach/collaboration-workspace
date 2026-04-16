@@ -95,7 +95,7 @@ export function BriefPanel({ request }: { request: DesignRequestWithRelations })
   const isMutating = completeMutation.isPending;
 
   return (
-    <section className="p-4">
+    <section className="p-4 overflow-y-hidden">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <h2 className="text-[18px] font-medium text-[var(--foreground)]">{request.title}</h2>
         <div className="flex items-center gap-2">

@@ -18,19 +18,15 @@ type WorkspaceMainProps = {
 function WorkspaceSkeleton() {
   return (
     <div
-      className="grid min-h-0 w-full"
-      style={{
-        gridTemplateColumns: "280px 1fr 320px",
-        height: "100%",
-      }}
+      className="grid h-full min-h-0 w-full grid-cols-1 md:[grid-template-columns:280px_minmax(0,1fr)] xl:[grid-template-columns:280px_minmax(0,1fr)_320px]"
     >
-      <aside className="workspace-panel border-[var(--color-border-tertiary)] bg-[var(--surface)]">
+      <aside className="workspace-panel h-auto border-[var(--color-border-tertiary)] bg-[var(--surface)] md:h-full">
         <BriefPanelSkeleton />
       </aside>
-      <main className="workspace-panel bg-[var(--surface)]">
+      <main className="workspace-panel h-auto min-w-0 bg-[var(--surface)] md:h-full">
         <div className="h-full animate-pulse bg-[var(--skeleton-pulse)] p-4" />
       </main>
-      <aside className="workspace-panel-last bg-[var(--surface)]">
+      <aside className="workspace-panel-last h-auto bg-[var(--surface)] md:h-full">
         <div className="h-full animate-pulse bg-[var(--skeleton-pulse)] p-4" />
       </aside>
     </div>
@@ -133,19 +129,15 @@ export function WorkspaceMain({ requestId }: WorkspaceMainProps) {
       className={`workspace-main ${roleClass} flex h-full min-h-0 min-w-0 flex-col`}
     >
       <div
-        className="grid min-h-0 flex-1"
-        style={{
-          gridTemplateColumns: "280px 1fr 320px",
-          height: "100%",
-        }}
+        className="grid h-full min-h-0 flex-1 grid-cols-1 overflow-y-auto md:[grid-template-columns:280px_minmax(0,1fr)] md:overflow-hidden xl:[grid-template-columns:280px_minmax(0,1fr)_320px]"
       >
-        <aside className="workspace-panel border-[var(--color-border-tertiary)] bg-[var(--surface)]">
+        <aside className="workspace-panel h-auto border-[var(--color-border-tertiary)] bg-[var(--surface)] md:h-full">
           <BriefPanel request={request} />
         </aside>
-        <main className="workspace-panel min-w-0 bg-[var(--surface)]">
+        <main className="workspace-panel h-auto min-w-0 bg-[var(--surface)] md:h-full">
           {centerPanel}
         </main>
-        <aside className="workspace-panel-last bg-[var(--surface)]">
+        <aside className="workspace-panel-last h-auto bg-[var(--surface)] md:h-full">
           <AIPanel />
         </aside>
       </div>

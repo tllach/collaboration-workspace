@@ -85,12 +85,21 @@ export function WorkspaceSidebar({ userId }: WorkspaceSidebarProps) {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   /** When a project route is open, sidebar starts collapsed; user can expand to see the full list. */
   const [listExpanded, setListExpanded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     if (!projectOpen) setListExpanded(false);
   }, [projectOpen]);
 
-  const collapsed = projectOpen && !listExpanded;
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  const collapsed = !isMobile && projectOpen && !listExpanded;
 
   const { data: myRequests, isLoading: myRequestsLoading, error: myRequestsError } = useMyBrandRequestsQuery(userId, authLoading, profile);
   const { data: designerRequests, isLoading: designerRequestsLoading, error: designerRequestsError } = useDesignerRequestsQuery(userId, authLoading, profile);
@@ -122,8 +131,8 @@ export function WorkspaceSidebar({ userId }: WorkspaceSidebarProps) {
   return (
     <aside
       className={[
-        "relative flex h-full min-h-0 shrink-0 flex-col border-r border-[var(--color-border-tertiary)] bg-[var(--surface)] transition-[width] duration-300 ease-out",
-        collapsed ? "w-[52px] overflow-hidden" : "w-[240px]",
+        "relative flex min-h-0 w-full flex-col border-b border-[var(--color-border-tertiary)] bg-[var(--surface)] md:h-full md:shrink-0 md:border-b-0 md:border-r md:transition-[width] md:duration-300 md:ease-out",
+        collapsed ? "md:w-[52px] md:overflow-hidden" : "md:w-[240px]",
       ].join(" ")}
       style={{ borderRightWidth: "0.5px" }}
     >
@@ -163,7 +172,7 @@ export function WorkspaceSidebar({ userId }: WorkspaceSidebarProps) {
         </div>
       </header>
 
-      <div className="min-h-0 flex-1 overflow-y-auto">
+      <div className="max-h-[42vh] min-h-0 flex-1 overflow-y-auto md:max-h-none">
         {showBrandChrome ? (
           authLoading || myRequestsLoading ? (
             <ProjectListSkeleton count={3} />
