@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
-import { RoleSwitcher } from "@/components/workspace/RoleSwitcher";
 import { AuthProvider } from "@/lib/auth/context";
 import { DocumentRole } from "@/lib/auth/document-role";
 import { QueryProvider } from "@/lib/query/provider";
+import { RoleSwitcher } from "@/components/workspace/RoleSwitcher"
 
 import "./globals.css";
 
@@ -22,7 +22,7 @@ export default function RootLayout({
         <AuthProvider>
           <QueryProvider>
             <DocumentRole />
-            <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:border-neutral-800 dark:bg-neutral-950/95 dark:supports-[backdrop-filter]:bg-neutral-950/80">
+            <header>
               <RoleSwitcher />
             </header>
             {children}

@@ -1,7 +1,6 @@
 "use client";
 
 import { useAuth } from "@/lib/auth/context";
-import type { UserRole } from "@/types";
 
 const ACCOUNTS = [
   {
@@ -24,24 +23,23 @@ const ACCOUNTS = [
 function Spinner() {
   return (
     <span
-      className="inline-block size-4 animate-spin rounded-full border-2 border-current border-t-transparent"
+      className="inline-block h-3.5 w-3.5 shrink-0 animate-spin rounded-full border-2 border-[#081e28] border-t-transparent"
       aria-hidden
     />
   );
 }
 
-function roleBadgeClass(role: UserRole | null): string {
-  if (role === "brand") return "bg-[#7F77DD]/15 text-[#5a52b8] ring-1 ring-[#7F77DD]/30";
-  if (role === "designer")
-    return "bg-[#1D9E75]/15 text-[#157a5a] ring-1 ring-[#1D9E75]/30";
-  return "bg-neutral-100 text-neutral-600 ring-1 ring-neutral-200";
+function accountFirstName(display: string): string {
+  const beforeSep = display.split("·")[0]?.trim() ?? "";
+  const firstWord = beforeSep.split(/\s+/)[0] ?? "";
+  return firstWord || display;
 }
 
 export function RoleSwitcher() {
   const { profile, isLoading, signInAs } = useAuth();
 
   const displayName = profile?.full_name?.trim() || profile?.email || "—";
-  
+
   const roleLabel =
     profile?.role === "brand"
       ? "Brand"
@@ -50,42 +48,40 @@ export function RoleSwitcher() {
         : "—";
 
   return (
-    <div className="bg-white flex flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
-      <div className="flex flex-wrap gap-2">
+    <div className="flex w-full items-center justify-between gap-3 border border-[color:var(--border-accent)] bg-[var(--surface)] px-3 py-2">
+      <div className="flex min-w-0 items-center gap-1">
         {ACCOUNTS.map((account) => {
           const isActive = profile?.email === account.email;
+          const label = accountFirstName(account.display);
           return (
             <button
               key={account.email}
               type="button"
               disabled={isLoading}
-              onClick={() => void signInAs(account.email, account.password) }
-              className={[
-                "min-h-9 min-w-[10rem] rounded-lg px-3 py-1.5 text-sm font-medium transition-colors text-black",
-                isLoading
-                  ? "flex items-center justify-center border border-neutral-200 bg-neutral-50"
-                  : isActive
-                    ? "text-white shadow-sm"
-                    : "border border-neutral-300 bg-transparent text-neutral-800 hover:bg-neutral-50",
-              ].join(" ")}
-              style={
-                isActive && !isLoading
-                  ? { backgroundColor: "var(--role-accent)" }
-                  : undefined
+              onClick={() =>
+                void signInAs(account.email, account.password).then(() => {
+                  window.location.replace("/");
+                })
               }
+              className={[
+                "h-8 rounded-lg px-3 text-xs transition-colors",
+                isActive
+                  ? "border border-transparent bg-[#9fff1a] font-semibold text-[#081e28]"
+                  : "border border-[color:var(--border-soft)] bg-[var(--surface-2)] text-[var(--muted)] hover:border-[color:var(--border-accent)] hover:text-white",
+              ].join(" ")}
+              title={account.display}
             >
-              { isLoading ? <Spinner /> : account.display}
+              {label}
             </button>
           );
         })}
       </div>
-      <div
-        className={[
-          "inline-flex w-fit max-w-full items-center rounded-full px-3 py-1 text-xs font-medium",
-          roleBadgeClass(profile?.role ?? null),
-        ].join(" ")}
-      >
-        Signed in as {displayName} · {roleLabel}
+      <div className="inline-flex shrink-0 items-center gap-2 rounded-full border border-[color:var(--border-soft)] bg-[var(--surface)] px-3 py-1 text-xs text-[var(--foreground)]">
+        <span className="h-2 w-2 shrink-0 rounded-full bg-[#9fff1a]" aria-hidden />
+        <span className="min-w-0 truncate">{displayName}</span>
+        <span className="rounded bg-[var(--role-accent-light)] px-1.5 py-0.5 text-[10px] text-[var(--role-accent)]">
+          {roleLabel}
+        </span>
       </div>
     </div>
   );

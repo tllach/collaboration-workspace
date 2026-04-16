@@ -223,6 +223,7 @@ $brief1$,
   (
     '22222222-2222-4222-8222-222222222202',
     '11111111-1111-4111-8111-111111111102',
+    null,
     'App Launch Campaign — Flowr',
     $brief2$
 Flowr is a mindfulness app for busy professionals who want small, repeatable rituals—not another guilt-driven streak system. Our launch campaign needs visuals that feel calm, soft, and grounded: think gentle gradients, breathable whitespace, and typography that whispers instead of shouts. The audience is roughly 25-40, often juggling work and family, and skeptical of “wellness” brands that overpromise.

@@ -3,30 +3,56 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #081e28;
+  --foreground: #f0f4f0;
+  --surface: #0d2a38;
+  --surface-2: #122f3f;
+  --border-soft: rgba(255, 255, 255, 0.07);
+  --border-accent: rgba(159, 255, 26, 0.18);
+  --muted: #7a9aaa;
+  --accent-global: #9fff1a;
   --role-accent: #7f77dd;
+  --color-border-tertiary: #e5e7eb;
 }
 
 :root[data-role="brand"] {
-  --role-accent: #7f77dd;
+  --role-accent: #b0aaff;
+  --role-accent-light: rgba(127, 119, 221, 0.15);
+  --role-accent-text: #b0aaff;
 }
 
 :root[data-role="designer"] {
-  --role-accent: #1d9e75;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --role-accent: #5ddeb0;
+  --role-accent-light: rgba(29, 158, 117, 0.15);
+  --role-accent-text: #5ddeb0;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: system-ui, sans-serif;
+}
+
+.role-brand {
+  --role-accent: #b0aaff;
+  --role-accent-light: rgba(127, 119, 221, 0.15);
+  --role-accent-text: #b0aaff;
+}
+
+.role-designer {
+  --role-accent: #5ddeb0;
+  --role-accent-light: rgba(29, 158, 117, 0.15);
+  --role-accent-text: #5ddeb0;
+}
+
+.workspace-panel {
+  height: 100%;
+  overflow-y: auto;
+  border-right: 0.5px solid var(--color-border-tertiary);
+}
+
+.workspace-panel-last {
+  border-right: none;
 }
 
 @layer utilities {
