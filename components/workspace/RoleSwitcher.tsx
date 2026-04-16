@@ -20,15 +20,6 @@ const ACCOUNTS = [
   },
 ] as const;
 
-function Spinner() {
-  return (
-    <span
-      className="inline-block h-3.5 w-3.5 shrink-0 animate-spin rounded-full border-2 border-[#081e28] border-t-transparent"
-      aria-hidden
-    />
-  );
-}
-
 function accountFirstName(display: string): string {
   const beforeSep = display.split("·")[0]?.trim() ?? "";
   const firstWord = beforeSep.split(/\s+/)[0] ?? "";

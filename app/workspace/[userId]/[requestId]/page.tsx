@@ -11,7 +11,7 @@ export default function WorkspaceRequestPage() {
   const requestId = params?.requestId ?? "";
 
   return (
-    <div className="grid h-[calc(100vh-48px)] grid-cols-[280px_1fr]">
+    <div className="grid h-[calc(100vh-48px)] grid-cols-[260px_1fr]">
       <WorkspaceSidebar userId={userId} />
       <WorkspaceMain requestId={requestId} />
     </div>

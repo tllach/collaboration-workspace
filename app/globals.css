@@ -12,19 +12,72 @@
   --muted: #7a9aaa;
   --accent-global: #9fff1a;
   --role-accent: #7f77dd;
-  --color-border-tertiary: #e5e7eb;
+  --color-border-tertiary: rgba(255, 255, 255, 0.12);
+  --color-background-secondary: #0f2a36;
+  --status-pending-bg: rgba(251, 191, 36, 0.12);
+  --status-pending-text: #fde68a;
+  --status-pending-ring: rgba(251, 191, 36, 0.28);
+  --status-active-bg: rgba(6, 182, 212, 0.14);
+  --status-active-text: #a5f3fc;
+  --status-active-ring: rgba(6, 182, 212, 0.35);
+  --status-completed-bg: rgba(52, 211, 153, 0.12);
+  --status-completed-text: #6ee7b7;
+  --status-completed-ring: rgba(52, 211, 153, 0.3);
+  --skeleton-pulse: rgba(232, 247, 250, 0.14);
 }
 
+/* Brand: warm orange — reads clearly against white UI */
 :root[data-role="brand"] {
-  --role-accent: #b0aaff;
-  --role-accent-light: rgba(127, 119, 221, 0.15);
-  --role-accent-text: #b0aaff;
+  --background: white;
+  --foreground: #0f172a;
+  --surface: #fff7ed;
+  --surface-2: #ffedd5;
+  --border-soft: rgba(15, 23, 42, 0.09);
+  --border-accent: rgba(234, 88, 12, 0.28);
+  --muted: #64748b;
+  --role-accent: #ea580c;
+  --role-accent-light: rgba(234, 88, 12, 0.14);
+  --role-accent-text: #c2410c;
+  /* Panel / list separators (sidebar rails, cards) */
+  --color-border-tertiary: rgba(234, 88, 12, 0.18);
+  --color-background-secondary: #fffbeb;
+  /* Request status chips — tuned for light surfaces */
+  --status-pending-bg: rgba(245, 158, 11, 0.18);
+  --status-pending-text: #9a3412;
+  --status-pending-ring: rgba(217, 119, 6, 0.35);
+  --status-active-bg: rgba(234, 88, 12, 0.14);
+  --status-active-text: #c2410c;
+  --status-active-ring: rgba(234, 88, 12, 0.32);
+  --status-completed-bg: rgba(5, 150, 105, 0.14);
+  --status-completed-text: #047857;
+  --status-completed-ring: rgba(16, 185, 129, 0.32);
+  --skeleton-pulse: rgba(15, 23, 42, 0.12);
 }
 
+/* Designer: cool cyan — distinct from brand’s warm spectrum */
 :root[data-role="designer"] {
-  --role-accent: #5ddeb0;
-  --role-accent-light: rgba(29, 158, 117, 0.15);
-  --role-accent-text: #5ddeb0;
+  --background: #071a22;
+  --foreground: #e8f7fa;
+  --surface: #0c2430;
+  --surface-2: #0f2f3f;
+  --border-soft: rgba(103, 232, 249, 0.1);
+  --border-accent: rgba(6, 182, 212, 0.22);
+  --muted: #7eb8c4;
+  --role-accent: #06b6d4;
+  --role-accent-light: rgba(6, 182, 212, 0.16);
+  --role-accent-text: #67e8f9;
+  --color-border-tertiary: rgba(6, 182, 212, 0.22);
+  --color-background-secondary: #0a1f2a;
+  --status-pending-bg: rgba(251, 191, 36, 0.12);
+  --status-pending-text: #fde68a;
+  --status-pending-ring: rgba(251, 191, 36, 0.28);
+  --status-active-bg: rgba(6, 182, 212, 0.14);
+  --status-active-text: #a5f3fc;
+  --status-active-ring: rgba(6, 182, 212, 0.35);
+  --status-completed-bg: rgba(52, 211, 153, 0.12);
+  --status-completed-text: #6ee7b7;
+  --status-completed-ring: rgba(52, 211, 153, 0.3);
+  --skeleton-pulse: rgba(232, 247, 250, 0.14);
 }
 
 body {
@@ -34,15 +87,15 @@ body {
 }
 
 .role-brand {
-  --role-accent: #b0aaff;
-  --role-accent-light: rgba(127, 119, 221, 0.15);
-  --role-accent-text: #b0aaff;
+  --role-accent: #ea580c;
+  --role-accent-light: rgba(234, 88, 12, 0.14);
+  --role-accent-text: #c2410c;
 }
 
 .role-designer {
-  --role-accent: #5ddeb0;
-  --role-accent-light: rgba(29, 158, 117, 0.15);
-  --role-accent-text: #5ddeb0;
+  --role-accent: #06b6d4;
+  --role-accent-light: rgba(6, 182, 212, 0.16);
+  --role-accent-text: #67e8f9;
 }
 
 .workspace-panel {
