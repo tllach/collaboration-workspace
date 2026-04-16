@@ -138,7 +138,11 @@ export function WorkspaceMain({ requestId }: WorkspaceMainProps) {
           {centerPanel}
         </main>
         <aside className="workspace-panel-last h-auto bg-[var(--surface)] md:h-full">
-          <AIPanel />
+          <AIPanel
+            key={requestId}
+            requestId={requestId}
+            requestTitle={request.title}
+          />
         </aside>
       </div>
     </div>
