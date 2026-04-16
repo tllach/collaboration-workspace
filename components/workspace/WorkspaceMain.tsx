@@ -15,19 +15,73 @@ type WorkspaceMainProps = {
   requestId: string;
 };
 
+function ChatSkeleton() {
+  const widths = ["72%", "55%", "80%", "45%", "65%", "58%"];
+  const alignRight = [false, true, false, true, false, true];
+  return (
+    <div className="flex h-full flex-col p-4">
+      <div className="border-b border-[var(--color-border-tertiary)] pb-3">
+        <div className="h-4 w-16 animate-pulse rounded bg-[var(--skeleton-pulse)]" />
+        <div className="mt-2 h-3 w-40 animate-pulse rounded bg-[var(--skeleton-pulse)] opacity-60" />
+      </div>
+      <div className="mt-3 flex flex-1 flex-col gap-3 overflow-hidden rounded-lg border border-[var(--color-border-tertiary)] bg-[var(--surface-2)] p-3">
+        {widths.map((w, i) => (
+          <div
+            key={i}
+            className={`flex ${alignRight[i] ? "justify-end" : "justify-start"}`}
+          >
+            <div
+              className="h-10 animate-pulse rounded-lg bg-[var(--skeleton-pulse)]"
+              style={{ width: w, animationDelay: `${i * 120}ms` }}
+            />
+          </div>
+        ))}
+      </div>
+      <div className="mt-3 flex items-end gap-2">
+        <div className="h-[52px] flex-1 animate-pulse rounded-lg bg-[var(--skeleton-pulse)] opacity-40" />
+        <div className="h-9 w-16 animate-pulse rounded-lg bg-[var(--skeleton-pulse)] opacity-40" />
+      </div>
+    </div>
+  );
+}
+
+function AIPanelSkeleton() {
+  return (
+    <div className="flex h-full flex-col">
+      <div className="flex h-12 shrink-0 items-center border-b border-[var(--color-border-tertiary)] px-4">
+        <div className="h-4 w-24 animate-pulse rounded bg-[var(--skeleton-pulse)]" />
+      </div>
+      <div className="flex shrink-0 gap-1.5 border-b border-[var(--color-border-tertiary)] px-4 py-2">
+        {[56, 72, 48].map((w, i) => (
+          <div
+            key={i}
+            className="h-6 animate-pulse rounded-full bg-[var(--skeleton-pulse)] opacity-50"
+            style={{ width: w }}
+          />
+        ))}
+      </div>
+      <div className="flex-1 px-4 py-3">
+        <div className="space-y-2 rounded-lg border border-[var(--border-soft)] bg-[var(--color-background-secondary)] p-4">
+          <div className="h-3 w-4/5 animate-pulse rounded bg-[var(--skeleton-pulse)]" />
+          <div className="h-3 w-full animate-pulse rounded bg-[var(--skeleton-pulse)]" />
+          <div className="h-3 w-3/5 animate-pulse rounded bg-[var(--skeleton-pulse)]" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function WorkspaceSkeleton() {
   return (
-    <div
-      className="grid h-full min-h-0 w-full grid-cols-1 md:[grid-template-columns:280px_minmax(0,1fr)] xl:[grid-template-columns:280px_minmax(0,1fr)_320px]"
-    >
+    <div className="grid h-full min-h-0 w-full grid-cols-1 md:[grid-template-columns:280px_minmax(0,1fr)] xl:[grid-template-columns:280px_minmax(0,1fr)_320px]">
       <aside className="workspace-panel h-auto border-[var(--color-border-tertiary)] bg-[var(--surface)] md:h-full">
         <BriefPanelSkeleton />
       </aside>
       <main className="workspace-panel h-auto min-w-0 bg-[var(--surface)] md:h-full">
-        <div className="h-full animate-pulse bg-[var(--skeleton-pulse)] p-4" />
+        <ChatSkeleton />
       </main>
       <aside className="workspace-panel-last h-auto bg-[var(--surface)] md:h-full">
-        <div className="h-full animate-pulse bg-[var(--skeleton-pulse)] p-4" />
+        <AIPanelSkeleton />
       </aside>
     </div>
   );

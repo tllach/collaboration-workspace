@@ -254,6 +254,11 @@ export function AIPanel({ requestId, requestTitle }: AIPanelProps) {
           </svg>
         </button>
       </form>
+
+      {/* ── Footer ── */}
+      <p className="shrink-0 pb-2 text-center text-[10px] text-[var(--muted)] opacity-60">
+        Powered by Claude AI
+      </p>
     </div>
   );
 }

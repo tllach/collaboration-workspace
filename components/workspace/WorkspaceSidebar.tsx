@@ -33,15 +33,23 @@ const MY_PROJECT_STATUS_CLASS: Partial<Record<RequestStatus, string>> = {
 
 function ProjectListSkeleton({ count }: { count: number }) {
   return (
-    <ul className="flex flex-col gap-2 px-3 py-2">
+    <ul className="flex flex-col gap-1 p-2">
       {Array.from({ length: count }).map((_, i) => (
         <li
           key={i}
-          className="animate-pulse rounded-lg border border-[var(--color-border-tertiary)] bg-[var(--surface-2)] p-3"
+          className="flex items-center justify-between rounded-r-md border-l-2 border-transparent px-3 py-2.5"
         >
-          <div className="h-4 w-[80%] rounded bg-[var(--skeleton-pulse)]" />
-          <div className="mt-2 h-3 w-16 rounded bg-[var(--skeleton-pulse)] opacity-70" />
-          <div className="mt-2 h-3 w-24 rounded bg-[var(--skeleton-pulse)] opacity-45" />
+          <div className="min-w-0 flex-1">
+            <div
+              className="h-3 animate-pulse rounded bg-[var(--skeleton-pulse)]"
+              style={{ width: `${60 + (i % 3) * 12}%` }}
+            />
+            <div
+              className="mt-2 h-2 animate-pulse rounded bg-[var(--skeleton-pulse)] opacity-60"
+              style={{ width: `${40 + (i % 2) * 15}%` }}
+            />
+          </div>
+          <div className="ml-3 h-[18px] w-16 shrink-0 animate-pulse rounded-full bg-[var(--skeleton-pulse)] opacity-50" />
         </li>
       ))}
     </ul>

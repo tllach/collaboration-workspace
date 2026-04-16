@@ -11,15 +11,62 @@ type ChatPanelProps = {
   request: DesignRequestWithRelations;
 };
 
-function counterpartyLabel(request: DesignRequestWithRelations, role: "brand" | "designer") {
+function getInitials(name: string | null | undefined): string {
+  if (!name) return "?";
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  return parts.slice(0, 2).map((p) => p[0]?.toUpperCase() ?? "").join("");
+}
+
+function ChatEmptyState({
+  role,
+  request,
+}: {
+  role: "brand" | "designer";
+  request: DesignRequestWithRelations;
+}) {
   if (role === "brand") {
-    if (!request.assigned_designer) return "Awaiting designer";
-    const name = request.assigned_designer.full_name ?? "Designer";
-    return `with ${name} (Designer)`;
+    if (request.assigned_designer) {
+      const name = request.assigned_designer.full_name ?? "Designer";
+      return (
+        <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--role-accent-light)] text-sm font-semibold text-[var(--role-accent-text)]">
+            {getInitials(name)}
+          </div>
+          <div>
+            <p className="text-sm font-medium text-[var(--foreground)]">{name}</p>
+            <p className="mt-1 text-[13px] text-[var(--muted)]">
+              Start the conversation with {name.split(" ")[0]}
+            </p>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div className="flex flex-1 flex-col items-center justify-center gap-2 px-6 text-center">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full border border-dashed border-[var(--border-soft)] bg-[var(--color-background-secondary)]">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+        </div>
+        <p className="text-[13px] leading-relaxed text-[var(--muted)]">
+          Your designer will appear here once they accept the project
+        </p>
+      </div>
+    );
   }
 
   const brandName = request.brand?.full_name ?? "Brand";
-  return `with ${brandName} (Brand)`;
+  return (
+    <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center">
+      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--role-accent-light)] text-sm font-semibold text-[var(--role-accent-text)]">
+        {getInitials(brandName)}
+      </div>
+      <div>
+        <p className="text-sm font-medium text-[var(--foreground)]">{brandName}</p>
+        <p className="mt-1 text-[13px] text-[var(--muted)]">
+          Start the conversation with {brandName.split(" ")[0]}
+        </p>
+      </div>
+    </div>
+  );
 }
 
 export function ChatPanel({ requestId, request }: ChatPanelProps) {
@@ -30,13 +77,6 @@ export function ChatPanel({ requestId, request }: ChatPanelProps) {
 
   const isDesignerBlocked =
     profile?.role === "designer" && request.assigned_designer_id !== profile.id;
-
-  const headerSubtitle = useMemo(() => {
-    if (!profile) return "";
-    if (profile.role === "brand") return counterpartyLabel(request, "brand");
-    if (profile.role === "designer") return counterpartyLabel(request, "designer");
-    return "";
-  }, [profile, request]);
 
   useEffect(() => {
     if (isLoading) return;
@@ -60,7 +100,6 @@ export function ChatPanel({ requestId, request }: ChatPanelProps) {
       <section className="flex h-full min-h-0 flex-col p-4">
         <div className="border-b border-[var(--color-border-tertiary)] pb-3">
           <p className="truncate text-[13px] text-[var(--muted)]">{request.title}</p>
-          <p className="mt-1 text-xs text-[var(--muted)]">{headerSubtitle}</p>
         </div>
         <div className="flex flex-1 items-center justify-center text-center">
           <p className="text-sm text-[var(--muted)]">
@@ -75,11 +114,10 @@ export function ChatPanel({ requestId, request }: ChatPanelProps) {
   }
 
   return (
-    <section className="flex h-full min-h-0 flex-col p-4">
-      <div className="border-b border-[var(--color-border-tertiary)] pb-3">
+    <section className="flex h-full min-h-0 flex-col overflow-hidden p-4">
+      <div className="shrink-0 border-b border-[var(--color-border-tertiary)] pb-3">
         <h2 className="text-sm font-semibold text-[var(--foreground)]">Chat</h2>
         <p className="mt-1 truncate text-[13px] text-[var(--muted)]">{request.title}</p>
-        <p className="mt-1 text-xs text-[var(--muted)]">{headerSubtitle}</p>
       </div>
 
       {isLoading ? (
@@ -91,10 +129,13 @@ export function ChatPanel({ requestId, request }: ChatPanelProps) {
       ) : (
         <div
           ref={scrollRef}
-          className="themed-scrollbar mt-3 flex-1 space-y-2 overflow-y-auto rounded-lg border border-[var(--color-border-tertiary)] bg-[var(--surface-2)] p-3"
+          className="themed-scrollbar mt-3 flex min-h-0 flex-1 flex-col gap-2 px-5 overflow-y-auto rounded-lg border border-[var(--color-border-tertiary)] bg-[var(--surface-2)] p-3"
         >
           {messages.length === 0 ? (
-            <p className="text-sm text-[var(--muted)]">No messages yet.</p>
+            <ChatEmptyState
+              role={profile?.role === "designer" ? "designer" : "brand"}
+              request={request}
+            />
           ) : (
             messages.map((message) => {
               const mine = profile?.id === message.sender_id;
@@ -121,7 +162,7 @@ export function ChatPanel({ requestId, request }: ChatPanelProps) {
         </div>
       )}
 
-      <div className="mt-3 flex items-end gap-2">
+      <div className="mt-3 flex shrink-0 items-end gap-2">
         <textarea
           value={draft}
           onChange={(event) => setDraft(event.target.value)}
