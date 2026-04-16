@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useAuth } from "@/lib/auth/context";
 import { useRealtimeChat } from "@/lib/hooks/useRealtimeChat";
