@@ -96,7 +96,7 @@ ${request.brief}
   `.trim();
 
   if (role === "brand") {
-    const base = `You are a creative brief coach helping ${userName}, a brand owner, get the most out of their collaboration with a designer on Grayola.
+    const base = `You are a creative brief coach helping ${userName}, a brand owner, get the most out of their collaboration with a designer on Briefed.
 
 You have full context on their current project:
 ${briefContext}
@@ -125,7 +125,7 @@ Your role:
   }
 
   if (role === "designer") {
-    const base = `You are a creative director assistant helping ${userName}, a designer, execute a project on Grayola.
+    const base = `You are a creative director assistant helping ${userName}, a designer, execute a project on Briefed.
 
 You have full context on their current project:
 ${briefContext}

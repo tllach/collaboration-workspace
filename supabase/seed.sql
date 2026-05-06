@@ -4,9 +4,9 @@
 -- ---------------------------------------------------------------------------
 -- Fixed IDs
 -- ---------------------------------------------------------------------------
--- brand1@grayola.io
--- brand2@grayola.io
--- designer@grayola.io
+-- brand1@briefed.app
+-- brand2@briefed.app
+-- designer@briefed.app
 -- ---------------------------------------------------------------------------
 
 -- pgcrypto (password hashing) — usually already enabled by migration
@@ -38,8 +38,8 @@ VALUES
     '11111111-1111-4111-8111-111111111101',
     'authenticated',
     'authenticated',
-    'brand1@grayola.io',
-    extensions.crypt('grayola123', extensions.gen_salt('bf')),
+    'brand1@briefed.app',
+    extensions.crypt('demo1234', extensions.gen_salt('bf')),
     now(),
     '{"provider":"email","providers":["email"]}',
     '{}',
@@ -55,8 +55,8 @@ VALUES
     '11111111-1111-4111-8111-111111111102',
     'authenticated',
     'authenticated',
-    'brand2@grayola.io',
-    extensions.crypt('grayola123', extensions.gen_salt('bf')),
+    'brand2@briefed.app',
+    extensions.crypt('demo1234', extensions.gen_salt('bf')),
     now(),
     '{"provider":"email","providers":["email"]}',
     '{}',
@@ -72,8 +72,8 @@ VALUES
     '11111111-1111-4111-8111-111111111103',
     'authenticated',
     'authenticated',
-    'designer@grayola.io',
-    extensions.crypt('grayola123', extensions.gen_salt('bf')),
+    'designer@briefed.app',
+    extensions.crypt('demo1234', extensions.gen_salt('bf')),
     now(),
     '{"provider":"email","providers":["email"]}',
     '{}',
@@ -106,7 +106,7 @@ VALUES
       'sub',
       '11111111-1111-4111-8111-111111111101',
       'email',
-      'brand1@grayola.io',
+      'brand1@briefed.app',
       'email_verified',
       true
     ),
@@ -123,7 +123,7 @@ VALUES
       'sub',
       '11111111-1111-4111-8111-111111111102',
       'email',
-      'brand2@grayola.io',
+      'brand2@briefed.app',
       'email_verified',
       true
     ),
@@ -140,7 +140,7 @@ VALUES
       'sub',
       '11111111-1111-4111-8111-111111111103',
       'email',
-      'designer@grayola.io',
+      'designer@briefed.app',
       'email_verified',
       true
     ),
@@ -158,7 +158,7 @@ INSERT INTO public.profiles (id, email, full_name, role, avatar_url, created_at)
 VALUES
   (
     '11111111-1111-4111-8111-111111111101',
-    'brand1@grayola.io',
+    'brand1@briefed.app',
     'Sofia Ramirez',
     'brand',
     null,
@@ -166,7 +166,7 @@ VALUES
   ),
   (
     '11111111-1111-4111-8111-111111111102',
-    'brand2@grayola.io',
+    'brand2@briefed.app',
     'Carlos Mendez',
     'brand',
     null,
@@ -174,7 +174,7 @@ VALUES
   ),
   (
     '11111111-1111-4111-8111-111111111103',
-    'designer@grayola.io',
+    'designer@briefed.app',
     'Alex Torres',
     'designer',
     null,

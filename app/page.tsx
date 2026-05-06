@@ -28,7 +28,7 @@ export default function HomePage() {
     if (!user) {
       if (autoSignInStarted.current) return;
       autoSignInStarted.current = true;
-      void signInAs("brand1@grayola.io", "grayola123").catch(() => {
+      void signInAs("brand1@briefed.app", process.env.PASSWORD_SALT!).catch(() => {
         autoSignInStarted.current = false;
       });
       return;

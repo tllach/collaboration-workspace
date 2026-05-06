@@ -8,9 +8,14 @@ import { RoleSwitcher } from "@/components/workspace/RoleSwitcher"
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Playground - Grayola Collaboration Workspace",
+  title: "Briefed — Design Collaboration",
   description:
-    "Single-page collaboration environment — a playground — where a Brand and a Designer work together on an active design request. One URL. One experience. But a role toggle that makes everything change. When you switch roles, the interface should shift meaningfully — not just cosmetically. What you see, what you can do, what the AI helps you with, how data is presented — all of it should reflect who you are in this collaboration. Under the hood, the separation must be real: both roles are actual authenticated users with properly enforced access boundaries.",
+    "Briefed is a design collaboration platform that connects brands and designers in one shared workspace.",
+  openGraph: {
+    title: "Briefed — Design Collaboration",
+    description:
+      "Briefed is a design collaboration platform that connects brands and designers in one shared workspace.",
+  },
 };
 
 export default function RootLayout({

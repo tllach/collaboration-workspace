@@ -4,18 +4,18 @@ import { useAuth } from "@/lib/auth/context";
 
 const ACCOUNTS = [
   {
-    email: "brand1@grayola.io",
-    password: "grayola123",
+    email: "brand1@briefed.app",
+    password: process.env.PASSWORD_SALT!,
     display: "Sofia · Brand",
   },
   {
-    email: "brand2@grayola.io",
-    password: "grayola123",
+    email: "brand2@briefed.app",
+    password: process.env.PASSWORD_SALT!,
     display: "Carlos · Brand",
   },
   {
-    email: "designer@grayola.io",
-    password: "grayola123",
+    email: "designer@briefed.app",
+    password: process.env.PASSWORD_SALT!,
     display: "Alex · Designer",
   },
 ] as const;
@@ -50,9 +50,9 @@ export function RoleSwitcher() {
               type="button"
               disabled={isLoading}
               onClick={() =>
-                void signInAs(account.email, account.password).then(() => {
+                void signInAs(account.email, account.password!).then(() => {
                   window.location.replace("/");
-                })
+                })  
               }
               className={[
                 "h-8 rounded-lg px-3 text-xs transition-colors",
