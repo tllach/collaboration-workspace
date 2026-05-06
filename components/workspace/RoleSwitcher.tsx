@@ -5,17 +5,17 @@ import { useAuth } from "@/lib/auth/context";
 const ACCOUNTS = [
   {
     email: "brand1@briefed.app",
-    password: process.env.PASSWORD_SALT!,
+    password: "demo1234",
     display: "Sofia · Brand",
   },
   {
     email: "brand2@briefed.app",
-    password: process.env.PASSWORD_SALT!,
+    password: "demo1234",
     display: "Carlos · Brand",
   },
   {
     email: "designer@briefed.app",
-    password: process.env.PASSWORD_SALT!,
+    password: "demo1234",
     display: "Alex · Designer",
   },
 ] as const;
@@ -50,7 +50,7 @@ export function RoleSwitcher() {
               type="button"
               disabled={isLoading}
               onClick={() =>
-                void signInAs(account.email, account.password!).then(() => {
+                void signInAs(account.email, account.password).then(() => {
                   window.location.replace("/");
                 })  
               }
